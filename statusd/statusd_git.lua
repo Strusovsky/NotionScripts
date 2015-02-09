@@ -49,16 +49,20 @@ local function getgitrepo()
 	if settings.work_dir then
 		path = settings.work_dir
 	return path .. "/"
-
+	end
 end
 
 local git_path = getgitrepo()
+local git_timer
 
 local function get_git_branch()
-	local p = assert(io.open("git --git-dir=" .. git_path ".git " .. 
-	"--work-tree=" .. git_path .. " rev-parse --abbrev-ref HEAD"))
+	local p = io.popen("git --git-dir=" .. git_path .. ".git " .. 
+	"--work-tree=" .. git_path .. " rev-parse --abbrev-ref HEAD", "r")
 	
-	return p 
+	local line = p:read()
+	
+	p:close()
+	return line
 end
 
 local function update_git()
@@ -67,7 +71,7 @@ local function update_git()
 
 	-- Inform statusd of the available variables.
 	-- 'git_branch' displays the current working branch
-	statusd.inform("git_branch", branch)
+	statusd.inform("git_branch", tostring(branch))
 	git_timer:set(settings.update_interval, update_git)
 end
 

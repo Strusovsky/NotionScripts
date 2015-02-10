@@ -235,7 +235,7 @@ local function get_info()
         display = settings.status_display[display]
       end
       display_data[k] = display
-    end
+   end
     info = settings.info_format:format(unpack(display_data))
     if threshold == 'blink' then
       hint = 'critical'
@@ -252,7 +252,7 @@ local function render_content(info, is_blank)
   -- or not).
   return info and settings.content_format:format(
     is_blank and string.rep(" ", info:len()) or info
-  ) or ""
+  ) or " [ 100% Full ]"
 end
 
 function update_battery(old_info, is_blank, next_phases)

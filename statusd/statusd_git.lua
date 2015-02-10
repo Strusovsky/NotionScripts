@@ -65,13 +65,25 @@ local function get_git_branch()
 	return line
 end
 
+local function get_staged_files()
+	local p = io.popen("git --git-dir=" .. git_path .. ".git " .. 
+	"--work-tree=" .. git_path .. " diff --cached --numstat | wc -l")
+
+	local number = p:read()
+	p:close()
+
+	return number
+end
+
 local function update_git()
 	-- Get the necessary data.
 	local branch = get_git_branch()
+	local staged_files = get_staged_files()
 
 	-- Inform statusd of the available variables.
 	-- 'git_branch' displays the current working branch
 	statusd.inform("git_branch", tostring(branch))
+	statusd.inform("git_files", tostring(staged_files))
 	git_timer:set(settings.update_interval, update_git)
 end
 

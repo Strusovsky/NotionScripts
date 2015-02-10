@@ -1,6 +1,6 @@
 A collection of [Notion](http://notion.sourceforge.net/) WM scripts.
 -------------------------------------------------------------------                                                                                                                                                                                           
-These scripts are modified or created by me.
+These scripts are modified or created by me. This repo aims to validate and maintain these scripts.
 
 How to use Statusd scripts
 --------------------------
